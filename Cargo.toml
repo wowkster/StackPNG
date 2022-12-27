@@ -8,6 +8,9 @@ license = "MIT"
 readme = "README.md"
 keywords = ["minecraft"]
 categories = ["command-line-utilities"]
+exclude = [
+    "examples/*"
+]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
