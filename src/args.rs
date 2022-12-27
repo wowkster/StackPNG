@@ -156,7 +156,7 @@ pub fn parse_args() -> Result<StackPngArgs, ()> {
     }
 
     if files.is_none() || files.as_ref().unwrap().len() == 0 {
-        print_error("No valid PNG files provided!");
+        print_error("No valid PNG files provided! Specify a directory or list of files.");
     }
 
     if ignore_aspect_ratio.is_some() && resize.is_none() {
