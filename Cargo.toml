@@ -2,7 +2,7 @@
 name = "stackpng"
 description = "A CLI tool for creating Minecraft-style animations from a PNG sequence"
 repository = "https://github.com/wowkster/StackPNG"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 license = "MIT"
 readme = "README.md"
