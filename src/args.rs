@@ -198,8 +198,8 @@ Created by Wowkster#0001 (https://github.com/wowkster)
 A tool for converting png sequences to Minecraft compatible animated textures
 
 USAGE:
-    stackpng [...options] <folder>                        - Constructs a stacked image from all the files in a folder (alphabetically)
-    stackpng [...options] <...files>                      - Constructs a stacked image from all the provided PNG files (in order given)
+    stackpng [...options] <folder>      - Constructs a stacked image from all the files in a folder (alphabetically)
+    stackpng [...options] <...files>    - Constructs a stacked image from all the provided PNG files (in order given)
 
 OPTIONS:
     -h, --help                    - Show the help menu
