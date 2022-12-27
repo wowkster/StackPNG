@@ -4,19 +4,12 @@ A CLI tool built in Rust for creating Minecraft-style animations from a PNG sequ
 
 ## Installing
 
-Make sure you have [Rust](https://www.rust-lang.org/tools/install) and [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed.
+Make sure you have [Rust](https://www.rust-lang.org/tools/install) installed.
 
-Clone the git repository like this:
-
-```command
-git clone https://github.com/wowkster/StackPNG
-cd StackPNG
-```
-
-Then compile and install with cargo:
+Clone, compile, and install `stackpng` with cargo:
 
 ```command
-cargo install --path .
+cargo install --git https://github.com/wowkster/StackPNG
 ```
 
 Now you can run the command anywhere and stack images to your heart's content:
