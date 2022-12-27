@@ -1,12 +1,14 @@
 use std::collections::VecDeque;
 
-use crate::common::print_error;
+use crate::common::{print_error, print_warning};
 
 #[derive(Debug)]
 pub struct StackPngArgs {
     pub name: String,
     pub frame_time: u16,
     pub disable_mcmeta: bool,
+    pub resize: bool,
+    pub ignore_aspect_ratio: bool,
     pub files: Vec<String>,
 }
 
@@ -23,6 +25,8 @@ pub fn parse_args() -> Result<StackPngArgs, ()> {
     let mut name = None;
     let mut frame_time = None;
     let mut disable_mcmeta = None;
+    let mut resize = None;
+    let mut ignore_aspect_ratio = None;
     let mut ignore_invalid = false;
     let mut files = None;
 
@@ -57,6 +61,16 @@ pub fn parse_args() -> Result<StackPngArgs, ()> {
                 args.pop_front().unwrap();
 
                 disable_mcmeta = Some(true);
+            }
+            "-r" | "--resize" => {
+                args.pop_front().unwrap();
+
+                resize = Some(true);
+            }
+            "--ignore-aspect-ratio" => {
+                args.pop_front().unwrap();
+
+                ignore_aspect_ratio = Some(true);
             }
             "-i" | "--ignore-invalid" => {
                 args.pop_front().unwrap();
@@ -145,10 +159,16 @@ pub fn parse_args() -> Result<StackPngArgs, ()> {
         print_error("No valid PNG files provided!");
     }
 
+    if ignore_aspect_ratio.is_some() && resize.is_none() {
+        print_warning("`--ignore-aspect-ratio` ignored since `--resize` was not specified.");
+    }
+
     Ok(StackPngArgs {
         name: name.unwrap_or(String::from("animation")),
         frame_time: frame_time.unwrap_or(2),
         disable_mcmeta: disable_mcmeta.unwrap_or(false),
+        resize: resize.unwrap_or(false),
+        ignore_aspect_ratio: ignore_aspect_ratio.unwrap_or(false),
         files: files.unwrap(),
     })
 }
@@ -170,19 +190,28 @@ pub fn is_valid_png_path(path: &String) -> bool {
 }
 
 pub fn print_help() -> ! {
-    println!("StackPNG v1.0.0");
-    println!();
-    println!("USAGE:");
-    println!("    stackpng [...options] <folder>                        - Constructs a stacked image from all the files in a folder (alphabetically)");
-    println!("    stackpng [...options] <...files>                      - Constructs a stacked image from all the provided PNG files (in order given)");
-    println!("    stackpng --frame-time 4 --ignore-invalid ./anim");
-    println!();
-    println!("OPTIONS:");
-    println!("    -h, --help                    - Show the help menu");
-    println!("    -n, --name <name>             - Specify the output file name");
-    println!("    -f, --frame-time <ticks>      - Specify the animation frame length");
-    println!("    -i, --ignore-invalid          - Ignore any non PNG files in the input");
-    println!("    -d, --disable-mcmeta          - Do not emit MCMeta file");
+    const HELP_TEXT: &'static str = "\
+StackPNG v1.0.0
+
+Created by Wowkster#0001 (https://github.com/wowkster)
+
+A tool for converting png sequences to Minecraft compatible animated textures
+
+USAGE:
+    stackpng [...options] <folder>                        - Constructs a stacked image from all the files in a folder (alphabetically)
+    stackpng [...options] <...files>                      - Constructs a stacked image from all the provided PNG files (in order given)
+
+OPTIONS:
+    -h, --help                    - Show the help menu
+    -n, --name <name>             - Specify the output file name
+    -f, --frame-time <ticks>      - Specify the animation frame length
+    -i, --ignore-invalid          - Ignore any non PNG files in the input
+    -r, --resize                  - Scale images (Nearest Neighbor) with different dimensions (uses the dimensions of the first image in the sequence) 
+        --ignore-aspect-ratio     - When used with `--resize`, image aspect ratios are not preserved, and all images are forced to resize
+    -d, --disable-mcmeta          - Do not emit MCMeta file\
+";
+
+    println!("{}", HELP_TEXT);
 
     std::process::exit(0);
 }

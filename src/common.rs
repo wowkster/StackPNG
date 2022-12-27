@@ -8,3 +8,12 @@ where
 
     std::process::exit(1)
 }
+
+pub fn print_warning<S>(warning: S) -> !
+where
+    S: Sized + ToString,
+{
+    eprintln!("{}", Colour::Yellow.paint(warning.to_string()));
+
+    std::process::exit(1)
+}
