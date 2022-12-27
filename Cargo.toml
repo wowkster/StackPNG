@@ -1,7 +1,13 @@
 [package]
 name = "stackpng"
+description = "A CLI tool for creating Minecraft-style animations from a PNG sequence"
+repository = "https://github.com/wowkster/StackPNG"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+readme = "README.md"
+keywords = ["minecraft"]
+categories = ["command-line-utilities"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
